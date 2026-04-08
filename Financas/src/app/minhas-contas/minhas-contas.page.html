@@ -16,8 +16,7 @@
   <!-- BOTÕES -->
   <div *ngIf="mostrarBotao">
     <ion-button class="botao" (click)="abrirFormulario()">Nova Conta</ion-button>
-    <ion-button class="botao">Excluir Conta</ion-button>
-    <ion-button class="botao">Minhas Contas</ion-button>
+    <ion-button class="botao" (click)="abrirListaContas()" >Minhas Contas</ion-button>
   </div>
 
   <!-- FORMULÁRIO -->
@@ -47,7 +46,7 @@
 
 </ion-content>
 
-  <ion-list>
+  <ion-list *ngIf="mostrarListaConta">
     <ion-item *ngFor="let conta of contas">
 
       <ion-label>
@@ -65,3 +64,7 @@
 
     </ion-item>
   </ion-list>
+
+  <h2>Valor total das contas: R$ {{ getTotal() }}</h2>
+
+  <ion-button (click)="voltar()">Voltar</ion-button>

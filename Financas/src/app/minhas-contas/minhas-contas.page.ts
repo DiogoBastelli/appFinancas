@@ -14,6 +14,7 @@ export class MinhasContasPage implements OnInit {
 
   mostrarBotao: boolean = true;
   mostrarFormulario: boolean = false;
+  mostrarListaConta: boolean = false;
 
   nomeConta: string = '';
   valor: any = '';
@@ -35,21 +36,46 @@ export class MinhasContasPage implements OnInit {
 
     this.contas.push(novaConta);
 
-    console.log(this.contas);
-
-    // limpar campos
+    localStorage.setItem('contas', JSON.stringify(this.contas));
+    
     this.nomeConta = '';
     this.valor = null;
     this.dataVencimento = null;
   }
   
   abrirFormulario() {
-      this.mostrarFormulario = true;
-      this.mostrarBotao = false;
+    this.mostrarFormulario = true;
+    this.mostrarBotao = false;
+  }
+
+  abrirListaContas() {
+    this.mostrarBotao = false;
+    this.mostrarListaConta = true;
+  }
+
+  voltar() {
+    this.mostrarListaConta = false;
+    this.mostrarBotao = true;
+    this.mostrarFormulario = false;
+  }
+
+  getTotal() {
+    var total = 0;
+
+    for (var conta of this.contas) {
+      total += Number(conta.valor);
     }
+
+    return total;
+  }
   constructor() { }
 
   ngOnInit() {
+    var dados = localStorage.getItem('contas');
+
+    if (dados) {
+      this.contas = JSON.parse(dados);
+    }
   }
 
 }
