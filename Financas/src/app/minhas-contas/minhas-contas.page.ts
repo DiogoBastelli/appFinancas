@@ -1,81 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {IonContent,IonHeader,IonTitle,IonToolbar,IonButton,IonButtons,IonMenuButton,IonItem,IonInput,IonLabel,IonList} from '@ionic/angular/standalone';
+import {IonContent, IonHeader,IonTitle,IonToolbar,IonButton,IonButtons,IonMenuButton,IonItem,IonLabel,IonList} from '@ionic/angular/standalone';
+import { ContaService } from '../services/conta.service';
 
 @Component({
   selector: 'app-minhas-contas',
   templateUrl: './minhas-contas.page.html',
   styleUrls: ['./minhas-contas.page.scss'],
   standalone: true,
-  imports: [IonContent,IonHeader,IonTitle,IonToolbar,CommonModule,FormsModule,IonButton,IonButtons,IonMenuButton,IonItem,IonInput,IonLabel,IonList]
+  imports: [IonContent,IonHeader,IonTitle,IonToolbar,CommonModule,FormsModule,IonButton,IonButtons,IonMenuButton,IonItem ,IonLabel,IonList]
 })
 export class MinhasContasPage implements OnInit {
 
-  mostrarBotao: boolean = true;
-  mostrarFormulario: boolean = false;
-  mostrarListaConta: boolean = false;
-
-  nomeConta: string = '';
-  valor: any = '';
-  dataVencimento: any = '';
   contas: any[] = [];
 
-  cadastrar() {
-    if (!this.nomeConta || !this.valor || !this.dataVencimento) {
-      console.log('Preencha todos os campos');
-      return;
-    }
+  constructor(private contaService: ContaService) {}
 
-    var novaConta = {
-      nome: this.nomeConta,
-      valor: this.valor,
-      dataVencimento: this.dataVencimento,
-      pago: false
-    };
-
-    this.contas.push(novaConta);
-
-    localStorage.setItem('contas', JSON.stringify(this.contas));
-    
-    this.nomeConta = '';
-    this.valor = null;
-    this.dataVencimento = null;
+  ionViewWillEnter() {
+    this.contas = this.contaService.getContas();
   }
-  
-  abrirFormulario() {
-    this.mostrarFormulario = true;
-    this.mostrarBotao = false;
-  }
-
-  abrirListaContas() {
-    this.mostrarBotao = false;
-    this.mostrarListaConta = true;
-  }
-
-  voltar() {
-    this.mostrarListaConta = false;
-    this.mostrarBotao = true;
-    this.mostrarFormulario = false;
-  }
-
-  getTotal() {
-    var total = 0;
-
-    for (var conta of this.contas) {
-      total += Number(conta.valor);
-    }
-
-    return total;
-  }
-  constructor() { }
 
   ngOnInit() {
-    var dados = localStorage.getItem('contas');
-
-    if (dados) {
-      this.contas = JSON.parse(dados);
-    }
+    this.contas = this.contaService.getContas();
   }
 
+  marcarComoPago(conta: any) {
+    conta.pago = true;
+    this.contaService.salvarContas(this.contas);
+  }
 }

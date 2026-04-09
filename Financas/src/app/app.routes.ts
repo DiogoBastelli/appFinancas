@@ -11,12 +11,12 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'gastos',
-    loadComponent: () => import('./gastos/gastos.page').then( m => m.GastosPage)
-  },
-  {
     path: 'minhas-contas',
     loadComponent: () => import('./minhas-contas/minhas-contas.page').then( m => m.MinhasContasPage)
+  },
+  {
+    path: 'cadastro-conta',
+    loadComponent: () => import('./cadastro-conta/cadastro-conta.page').then( m => m.CadastroContaPage)
   },
   
 ];

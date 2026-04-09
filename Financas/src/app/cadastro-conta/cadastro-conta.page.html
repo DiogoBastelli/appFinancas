@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+
+    <!-- botão do menu -->
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Cadastrar Conta</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<form (ngSubmit)="cadastrar()">
+
+  <ion-item>
+    <ion-label position="stacked">Nome da Conta</ion-label>
+    <ion-input [(ngModel)]="nomeConta" name="nomeConta"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Valor</ion-label>
+    <ion-input type="number" [(ngModel)]="valor" name="valor"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Data de Vencimento</ion-label>
+    <ion-input type="date" [(ngModel)]="dataVencimento" name="dataVencimento"></ion-input>
+  </ion-item>
+
+  <ion-button expand="full" type="submit">
+    Cadastrar
+  </ion-button>
+
+</form>

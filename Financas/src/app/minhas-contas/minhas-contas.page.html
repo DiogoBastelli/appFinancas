@@ -12,59 +12,25 @@
 </ion-header>
 
 <ion-content>
+  <ion-list>
+  <ion-item *ngFor="let conta of contas">
 
-  <!-- BOTÕES -->
-  <div *ngIf="mostrarBotao">
-    <ion-button class="botao" (click)="abrirFormulario()">Nova Conta</ion-button>
-    <ion-button class="botao" (click)="abrirListaContas()" >Minhas Contas</ion-button>
-  </div>
+    <ion-label>
+      <h2>{{ conta.nome }}</h2>
+      <p>R$ {{ conta.valor }}</p>
+      <p>Vencimento: {{ conta.dataVencimento }}</p>
 
-  <!-- FORMULÁRIO -->
-  <form *ngIf="mostrarFormulario" (ngSubmit)="cadastrar()">
+      <p *ngIf="conta.pago">🟢 Pago</p>
+      <p *ngIf="!conta.pago">🟡 Pendente</p>
+    </ion-label>
 
-    <ion-item>
-      <ion-label position="stacked">Nome da Conta</ion-label>
-      <ion-input [(ngModel)]="nomeConta" name="nomeConta"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked">Valor</ion-label>
-      <ion-input type="number" [(ngModel)]="valor" name="valor"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked">Data de Vencimento</ion-label>
-      <ion-input type="date" [(ngModel)]="dataVencimento" name="dataVencimento"></ion-input>
-    </ion-item>
-
-    <ion-button expand="full" type="submit">
-      Cadastrar
+    <ion-button (click)="marcarComoPago(conta)">
+      Pagar
     </ion-button>
 
-
-  </form>
-
+  </ion-item>
+</ion-list>
 </ion-content>
 
-  <ion-list *ngIf="mostrarListaConta">
-    <ion-item *ngFor="let conta of contas">
 
-      <ion-label>
-        <h2>{{ conta.nome }}</h2>
-        <p>R$ {{ conta.valor }}</p>
-        <p>Vencimento: {{ conta.dataVencimento }}</p>
 
-        <p *ngIf="conta.pago">🟢 Pago</p>
-        <p *ngIf="!conta.pago">🟡 Pendente</p>
-      </ion-label>
-
-      <ion-button (click)="conta.pago = true">
-        Pagar
-      </ion-button>
-
-    </ion-item>
-  </ion-list>
-
-  <h2>Valor total das contas: R$ {{ getTotal() }}</h2>
-
-  <ion-button (click)="voltar()">Voltar</ion-button>
